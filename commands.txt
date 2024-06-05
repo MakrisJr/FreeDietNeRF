@@ -1,0 +1,9 @@
+nvtop
+htop
+
+pip install wandb==0.15.11
+pip install protobuf==3.20.3
+
+scp local_dir username@gala1:remote_dir
+export WANDB_ENTITY=anthos_makris
+
