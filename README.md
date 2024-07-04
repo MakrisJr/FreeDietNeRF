@@ -1,3 +1,4 @@
+## Modified repository from [https://github.com/Jiawei-Yang/FreeNeRF/tree/main/DietNeRF-pytorch] for own experiments.
 # [CVPR23] FreeNeRF: Improving Few-shot Neural Rendering with Free Frequency Regularization
 
 ## [Project Page](https://jiawei-yang.github.io/FreeNeRF/) | [Paper](https://arxiv.org/abs/2303.07418)
