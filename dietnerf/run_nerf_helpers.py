@@ -55,6 +55,9 @@ class DenseLayer(nn.Linear):
 
 
 # Positional encoding (section 5.1)
+"""
+Defines a function that embeds x to (x, sin(2^k x), cos(2^k x), ...)
+"""
 class Embedder:
     def __init__(self, **kwargs):
         self.kwargs = kwargs
@@ -91,7 +94,7 @@ class Embedder:
 def get_embedder(multires, i=0):
     if i == -1:
         return nn.Identity(), 3
-    
+    # Embedder for the input points
     embed_kwargs = {
                 'include_input' : True,
                 'input_dims' : 3,
@@ -232,7 +235,7 @@ def get_rays(H, W, focal, c2w, nH=None, nW=None, jitter=False):
     else:
         pts_W = torch.linspace(0, W-1, nW)
         pts_H = torch.linspace(0, H-1, nH)
-    i, j = torch.meshgrid(pts_W, pts_H)  # pytorch's meshgrid has indexing='ij'
+    i, j = torch.meshgrid(pts_W, pts_H, indexing='ij')  # pytorch's meshgrid has indexing='ij'
     i = i.t()
     j = j.t()
     dirs = torch.stack([(i-W*.5)/focal, -(j-H*.5)/focal, -torch.ones_like(i)], -1)
