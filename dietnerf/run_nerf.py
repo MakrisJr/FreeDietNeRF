@@ -817,6 +817,12 @@ def train():
             file.write(open(args.config, 'r').read())
 
     # Create nerf model
+    # render_kwargs_train: rendering parameters
+    # render_kwargs_test: rendering parameters
+    # start: start iteration
+    # grad_vars: trainable variables
+    # optimizer: optimizer
+    # scaler: gradient scaler
     render_kwargs_train, render_kwargs_test, start, grad_vars, optimizer, scaler = create_nerf(args)
     global_step = start
     network_fn = render_kwargs_train['network_fn']
@@ -859,6 +865,7 @@ def train():
             rgbs, _ = render_path(render_poses, hwf, args.chunk, render_kwargs_test, gt_imgs=images, savedir=testsavedir, render_factor=args.render_factor)
             print('Done rendering', testsavedir)
             imageio.mimwrite(os.path.join(testsavedir, 'video.mp4'), to8b(rgbs), fps=30, quality=8)
+            wandb.log({"video": wandb.Video(os.path.join(testsavedir, 'video.mp4'), fps=30, format="gif")})
             if args.render_test:
                 # Compute metrics
                 mse, psnr, ssim, lpips = get_perceptual_metrics(rgbs, images, device=device)
